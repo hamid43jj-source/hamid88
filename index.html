@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login/Register Demo</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; }
+  input { width: 100%; padding: 8px; margin: 6px 0; }
+  button { padding: 10px; width: 100%; background: #007bff; color: white; border: none; }
+  .message { margin: 10px 0; color: green; }
+  .error { color: red; }
+</style>
+</head>
+<body>
+
+<h2>Register</h2>
+<input type="text" id="regUsername" placeholder="Username" />
+<input type="password" id="regPassword" placeholder="Password" />
+<button onclick="register()">Register</button>
+<p id="regMessage" class="message"></p>
+
+<hr />
+
+<h2>Login</h2>
+<input type="text" id="loginUsername" placeholder="Username" />
+<input type="password" id="loginPassword" placeholder="Password" />
+<button onclick="login()">Login</button>
+<p id="loginMessage" class="message"></p>
+
+<script>
+  // Simple in-memory user store
+  const users = {};
+
+  function register() {
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const regMessage = document.getElementById('regMessage');
+
+    if (!username || !password) {
+      regMessage.textContent = "সব ফিল্ড পূরণ করুন";
+      regMessage.className = 'message error';
+      return;
+    }
+    if (users[username]) {
+      regMessage.textContent = "ইউজারনেম ইতিমধ্যে ব্যবহার হচ্ছে";
+      regMessage.className = 'message error';
+      return;
+    }
+    users[username] = password;
+    regMessage.textContent = "রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করো";
+    regMessage.className = 'message';
+    
+    // ক্লিয়ার ইনপুট ফিল্ড
+    document.getElementById('regUsername').value = '';
+    document.getElementById('regPassword').value = '';
+  }
+
+  function login() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const loginMessage = document.getElementById('loginMessage');
+
+    if (!username || !password) {
+      loginMessage.textContent = "সব ফিল্ড পূরণ করুন";
+      loginMessage.className = 'message error';
+      return;
+    }
+    if (users[username] && users[username] === password) {
+      loginMessage.textContent = "লগইন সফল!";
+      loginMessage.className = 'message';
+    } else {
+      loginMessage.textContent = "ইউজারনেম অথবা পাসওয়ার্ড ভুল";
+      loginMessage.className = 'message error';
+    }
+
+    // ক্লিয়ার ইনপুট ফিল্ড
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+  }
+</script>
+
+</body>
+</html>
