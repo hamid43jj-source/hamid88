@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login - Hamid Demo</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; background: #f5f5f5; padding: 20px; }
+  h2 { text-align: center; }
+  input { width: 100%; padding: 10px; margin: 8px 0; }
+  button { padding: 10px; width: 100%; background: #007bff; color: white; border: none; border-radius: 5px; }
+  .message { margin: 10px 0; color: green; }
+  .error { color: red; }
+</style>
+</head>
+<body>
+
+<h2>Login</h2>
+<input type="text" id="loginUsername" placeholder="Username" />
+<input type="password" id="loginPassword" placeholder="Password" />
+<button onclick="login()">Login</button>
+<p id="loginMessage" class="message"></p>
+<p><a href="index.html">🏠 Back to Home</a></p>
+
+<script>
+  const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+  function login() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const loginMessage = document.getElementById('loginMessage');
+
+    if (!username || !password) {
+      loginMessage.textContent = "সব ফিল্ড পূরণ করুন";
+      loginMessage.className = 'message error';
+      return;
+    }
+    if (users[username] && users[username] === password) {
+      loginMessage.textContent = "লগইন সফল!";
+      loginMessage.className = 'message';
+    } else {
+      loginMessage.textContent = "ইউজারনেম অথবা পাসওয়ার্ড ভুল";
+      loginMessage.className = 'message error';
+    }
+
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+  }
+</script>
+
+</body>
+</html>
